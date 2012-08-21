@@ -278,7 +278,7 @@
 					<object class="IBUIButton" id="99277194">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{217, 275}, {165, 37}}</string>
+						<string key="NSFrame">{{43, 404}, {165, 37}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="539434501"/>
@@ -288,7 +288,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Post Open Graph</string>
+						<string key="IBUINormalTitle">Open Graph Native</string>
 						<reference key="IBUIHighlightedTitleColor" ref="380594171"/>
 						<reference key="IBUIDisabledTitleColor" ref="248341095"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
