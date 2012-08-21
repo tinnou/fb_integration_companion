@@ -217,7 +217,7 @@
     webView.hidden = NO;
 }
 
-// open web view button handler for the Login
+// open web view button handler for the FB SHARE (OPEN GRPAH JS SDK)
 - (IBAction)openWebViewClickLogin:(UIButton *)sender {
     
     //Let's animate (shake) the whole view 
@@ -237,7 +237,7 @@
         return;
     }
     
-    NSString *fullURL = @"http://www.google.com";
+    NSString *fullURL = @"http://www.nfl.com/mobile/fb-share?template=basic-html&confirm=true&gameId=6";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [webViewLogin loadRequest:requestObj];
