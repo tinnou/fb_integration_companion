@@ -83,9 +83,19 @@
     else {
         NSLog(@"FB session is closed");
     }
+    //Can be defined persistently elsewhere
     NSArray *permissions = [[NSArray alloc] initWithObjects:
                             @"publish_actions",
-                            @"status_update",
+                            @"email",
+                            @"user_about_me",
+                            @"user_activities",
+                            @"user_birthday",
+                            @"user_education_history",
+                            @"user_hometown",
+                            @"user_interests",
+                            @"user_likes",
+                            @"user_location",
+                            //@"status_update", //this is an extended permission, uncomment to enable "post status update" feature
                             nil];
     
     // Create Login View so that the app will be granted permissions.
@@ -435,7 +445,16 @@
         //Init the permissions - could be an instance variable, or constant
         NSArray *permissions = [[NSArray alloc] initWithObjects:
                                 @"publish_actions",
-                                @"status_update",
+                                @"email",
+                                @"user_about_me",
+                                @"user_activities",
+                                @"user_birthday",
+                                @"user_education_history",
+                                @"user_hometown",
+                                @"user_interests",
+                                @"user_likes",
+                                @"user_location",
+                                //@"status_update", //this is an extended permission, uncomment to enable "post status update" feature
                                 nil];
         
         //If the session isn't open, let's open it now and present the login UX to the user
