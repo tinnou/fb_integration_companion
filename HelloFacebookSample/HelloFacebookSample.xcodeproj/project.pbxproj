@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3A0C2E5F15DEB20B0020B702 /* NSString+AStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C2E5E15DEB20B0020B702 /* NSString+AStringAdditions.m */; };
 		3A0C2E6615DED8EB0020B702 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0C2E6515DED8EB0020B702 /* QuartzCore.framework */; };
+		3A4ACA8D15E553C000BF694E /* HFURLBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4ACA8C15E553C000BF694E /* HFURLBuilder.m */; };
+		3A4ACA9115E56A4900BF694E /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4ACA9015E56A4900BF694E /* NSString+URLEncoding.m */; };
 		3A7F26F615D9C1D600B9B58F /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7F26F515D9C1D600B9B58F /* SenTestingKit.framework */; };
 		3A7F286215DC7D6400B9B58F /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A7F286115DC7D6400B9B58F /* FacebookSDKResources.bundle */; };
 		3AA5AB0915E2F07A00FA55B7 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA5AB0815E2F07A00FA55B7 /* FacebookSDK.framework */; };
@@ -34,6 +36,10 @@
 		3A0C2E5E15DEB20B0020B702 /* NSString+AStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AStringAdditions.m"; sourceTree = "<group>"; };
 		3A0C2E6515DED8EB0020B702 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3A0C2E6B15DF11050020B702 /* HFProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HFProtocols.h; sourceTree = "<group>"; };
+		3A4ACA8B15E553C000BF694E /* HFURLBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFURLBuilder.h; sourceTree = "<group>"; };
+		3A4ACA8C15E553C000BF694E /* HFURLBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFURLBuilder.m; sourceTree = "<group>"; };
+		3A4ACA8F15E56A4900BF694E /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		3A4ACA9015E56A4900BF694E /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		3A7F26F515D9C1D600B9B58F /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3A7F286115DC7D6400B9B58F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		3AA5AB0815E2F07A00FA55B7 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -118,6 +124,10 @@
 				5F6AF19D1532A37B00DDBD75 /* HFAppDelegate.m */,
 				5F6AF19F1532A37B00DDBD75 /* HFViewController.h */,
 				5F6AF1A01532A37B00DDBD75 /* HFViewController.m */,
+				3A4ACA8B15E553C000BF694E /* HFURLBuilder.h */,
+				3A4ACA8C15E553C000BF694E /* HFURLBuilder.m */,
+				3A4ACA8F15E56A4900BF694E /* NSString+URLEncoding.h */,
+				3A4ACA9015E56A4900BF694E /* NSString+URLEncoding.m */,
 				3A0C2E5D15DEB20B0020B702 /* NSString+AStringAdditions.h */,
 				3A0C2E5E15DEB20B0020B702 /* NSString+AStringAdditions.m */,
 				5F6AF1A21532A37B00DDBD75 /* HFViewController_iPhone.xib */,
@@ -216,6 +226,8 @@
 				5F6AF19E1532A37B00DDBD75 /* HFAppDelegate.m in Sources */,
 				5F6AF1A11532A37B00DDBD75 /* HFViewController.m in Sources */,
 				3A0C2E5F15DEB20B0020B702 /* NSString+AStringAdditions.m in Sources */,
+				3A4ACA8D15E553C000BF694E /* HFURLBuilder.m in Sources */,
+				3A4ACA9115E56A4900BF694E /* NSString+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

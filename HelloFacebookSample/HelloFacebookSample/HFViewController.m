@@ -22,6 +22,7 @@
 #import <QuartzCore/CAAnimation.h>
 
 #import "HFProtocols.h"
+#import "HFURLBuilder.h"
 
 @interface HFViewController () <FBLoginViewDelegate>
 
@@ -237,8 +238,50 @@
         return;
     }
     
-    NSString *fullURL = @"http://www.nfl.com/mobile/fb-share?template=basic-html&confirm=true&gameId=6";
-    NSURL *url = [NSURL URLWithString:fullURL];
+    //Let's construct our Open Graph request
+    
+    //General pre-requisite
+    NSString *baseUrl = @"http://www.nfl.com/mobile/fb-share";
+    NSString *template = @"basic-html";
+    NSString *confirm = @"true";
+    
+    //OG object and action info - this should be dynamic!
+    NSString *game_id = @"2012091300";
+    NSString *year = @"2012";
+    NSString *game_week = @"2";
+    NSString *team_home = @"bears";
+    NSString *team_away = @"packers";
+    NSString *object = @"play";
+    NSString *action = @"predict";
+    NSString *object_title = @"What is the next move?";
+    NSString *object_answer = @"Punt";
+    NSString *user_question_score = @"1200";
+    NSString *user_total_score = @"865000";
+    NSString *user_team = @"bears";
+
+    
+    //Construct a valid URL encoded string 
+    HFURLBuilder *builder = [[HFURLBuilder alloc] initWithResourceURLString:baseUrl];
+    [builder setQueryParameterWithName:@"template" toValue:template];
+    [builder setQueryParameterWithName:@"confirm" toValue:confirm];
+    [builder setQueryParameterWithName:@"game_id" toValue:game_id];
+    [builder setQueryParameterWithName:@"year" toValue:year];
+    [builder setQueryParameterWithName:@"game_week" toValue:game_week];
+    [builder setQueryParameterWithName:@"team_home" toValue:team_home];
+    [builder setQueryParameterWithName:@"team_away" toValue:team_away];
+    [builder setQueryParameterWithName:@"object" toValue:object];
+    [builder setQueryParameterWithName:@"action" toValue:action];
+    [builder setQueryParameterWithName:@"object_title" toValue:object_title];
+    [builder setQueryParameterWithName:@"object_answer" toValue:object_answer];
+    [builder setQueryParameterWithName:@"user_question_score" toValue:user_question_score];
+    [builder setQueryParameterWithName:@"user_total_score" toValue:user_total_score];
+    [builder setQueryParameterWithName:@"user_team" toValue:user_team];
+
+    
+    NSURL *url = [NSURL URLWithString:[builder constructedURLString]];
+   
+    NSLog(@"URL to request: %@", url);
+    
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [webViewLogin loadRequest:requestObj];
  
@@ -247,6 +290,7 @@
     
 }
 
+//Open Graph posting done NATIVELY
 - (IBAction)postOpenGraphClick:(UIButton *)sender {
     
     NSLog(@"Ready to post Open graph action");
