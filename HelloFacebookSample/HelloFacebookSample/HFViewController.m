@@ -145,6 +145,7 @@
     self.buttonOpenWebViewLogin.enabled = YES;
     self.buttonPostOpenGraph.enabled = YES;
 
+    //TODO - notify Gigya of the FB login
     
     [webView reload];
 }
@@ -468,6 +469,7 @@
                 NSLog(@"User is logged in into Facebook");
                 // and here we make sure to update our UX according to the new session state
                 [self.webView reload];
+                //TODO - notify Gigya of the Fb login
             }
         }];
         
