@@ -264,6 +264,7 @@
     NSString *team_away = @"packers";
     NSString *object = @"play";
     NSString *action = @"predict";
+    NSString *image = @"http://i.nflcdn.com/static/site/4.3/img/global/nfl-logo.png";
     NSString *object_title = @"What is the next move?";
     NSString *object_answer = @"Punt";
     NSString *user_question_score = @"1200";
@@ -282,6 +283,7 @@
     [builder setQueryParameterWithName:@"team_away" toValue:team_away];
     [builder setQueryParameterWithName:@"object" toValue:object];
     [builder setQueryParameterWithName:@"action" toValue:action];
+    [builder setQueryParameterWithName:@"image" toValue:image];
     [builder setQueryParameterWithName:@"object_title" toValue:object_title];
     [builder setQueryParameterWithName:@"object_answer" toValue:object_answer];
     [builder setQueryParameterWithName:@"user_question_score" toValue:user_question_score];
