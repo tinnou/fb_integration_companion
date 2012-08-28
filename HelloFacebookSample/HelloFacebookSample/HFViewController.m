@@ -219,7 +219,7 @@
         return;
     }
     
-    NSString *fullURL = @"http://www.nfl.com/mobile/fb-comments.html?template=basic-html&confirm=true&gameId=2&width=400";
+    NSString *fullURL = @"http://www.nfl.com/mobile/fb-comments.html?template=basic-html&confirm=true&gameId=2&width=400&theme=light&mobile=true";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     NSString* token =  [NSString stringWithFormat:@"FB._authResponse.accessToken = '%@'", [FBSession activeSession].accessToken];
