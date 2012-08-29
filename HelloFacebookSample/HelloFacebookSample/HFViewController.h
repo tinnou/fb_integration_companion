@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface HFViewController : UIViewController <UIWebViewDelegate> {
+@interface HFViewController : UIViewController <UIWebViewDelegate, UITextFieldDelegate> {
     
     IBOutlet UIWebView *webView;
     IBOutlet UIWebView *webViewLogin;

@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) //1
+#define kLatestKivaLoansURL [NSURL URLWithString: @"http://api.kivaws.org/v1/loans/search.json?status=fundraising"] //2
+
+
 #import "HFViewController.h"
 #import "NSString+AStringAdditions.h"
 
@@ -24,6 +28,9 @@
 #import "HFProtocols.h"
 #import "HFURLBuilder.h"
 
+#import "NSString+URLEncoding.h"
+
+
 @interface HFViewController () <FBLoginViewDelegate>
 
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePic;
@@ -31,6 +38,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonOpenWebView;
 @property (strong, nonatomic) IBOutlet UIButton *buttonOpenWebViewLogin;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldAvatar;
+@property (strong, nonatomic) IBOutlet UIImageView *avatarImage;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonPostStatus;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPostPhoto;
@@ -59,6 +68,8 @@
 
 @synthesize buttonOpenWebView = _buttonOpenWebView;
 @synthesize buttonOpenWebViewLogin = _buttonOpenWebViewLogin;
+@synthesize textFieldAvatar = _textFieldAvatar;
+@synthesize avatarImage = _avatarImage;
 
 @synthesize buttonPostStatus = _buttonPostStatus;
 @synthesize buttonPostPhoto = _buttonPostPhoto;
@@ -123,6 +134,8 @@
     self.loggedInUser = nil;
     self.profilePic = nil;
     [self setButtonPostOpenGraph:nil];
+    [self setTextFieldAvatar:nil];
+    [self setAvatarImage:nil];
     [super viewDidUnload];
 }
 
@@ -326,6 +339,57 @@
      }];
 
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    NSString *username = [textField text];
+    
+    [self makeHTTPRequestToPluck:username];
+        
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void) makeHTTPRequestToPluck:(NSString *) username {
+    
+    NSString *urlBase = @"http://pluck.nfl.com/ver1.0/daapi2.api?jsonRequest=";
+    NSString *url = [urlBase stringByAppendingFormat:
+                     @"{'Envelopes':[{'PayloadType':'Requests.Users.UserRequest','Payload':{'ObjectType':'Requests.Users.UserRequest','UserKey':{'ObjectType':'Models.Users.UserKey','Key':'%@'}}}],'ObjectType':'Requests.RequestBatch'}", username];
+    
+    dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *urlEscaped = [ url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
+        
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlEscaped]];
+        [self performSelectorOnMainThread:@selector(fetchedData:)
+                               withObject:data waitUntilDone:YES];
+    });
+}
+
+
+- (void)fetchedData:(NSData *)responseData {
+    //parse out the json data
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:responseData //1
+                          options:kNilOptions
+                          error:&error];
+    
+    NSArray* response = [json objectForKey:@"Envelopes"];
+    NSDictionary* payload = [[response objectAtIndex:0] objectForKey:@"Payload"];
+    NSDictionary* user = [payload objectForKey:@"User"];
+    NSString* avatarPhotoUrl = [user objectForKey:@"AvatarPhotoUrl"]; //2
+    
+    NSLog(@"response: %@", avatarPhotoUrl.class); //3
+    
+    //We got the Avatar url string - now let's push it to an image view
+    NSURL *url = [NSURL URLWithString: avatarPhotoUrl];
+    UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:url]];
+    _avatarImage.image =image;
+    
+}
+
 
 // UIAlertView helper for post buttons
 - (void)showAlert:(NSString *)message
