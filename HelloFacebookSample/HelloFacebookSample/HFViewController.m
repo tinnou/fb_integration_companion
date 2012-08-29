@@ -277,10 +277,10 @@
     NSString *team_away = @"packers";
     NSString *object = @"play";
     NSString *action = @"predict";
-    NSString *image = @"http://i.nflcdn.com/static/site/4.3/img/global/nfl-logo.png";
-    NSString *object_title = @"What is the next move?";
-    NSString *object_answer = @"Punt";
-    NSString *user_question_score = @"1200";
+    NSString *image = @"http://static.nfl.com/static/content/public/image/mobile/TNF_200x200.png";
+    NSString *object_title = @"How many rounds was the very first NFL Draft?";
+    NSString *object_answer = @"8";
+    NSString *user_question_score = @"1350";
     NSString *user_total_score = @"865000";
     NSString *user_team = @"bears";
 
