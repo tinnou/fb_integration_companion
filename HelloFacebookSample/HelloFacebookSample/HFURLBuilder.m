@@ -14,12 +14,12 @@
 
 -(id)initWithResourceURLString:(NSString *) baseURL {
     self = [super init];
-    self->URL = [baseURL mutableCopy];
+    URL = [baseURL mutableCopy];
     
     unichar questionSymbol = '?';
-    [self->URL appendFormat:@"%c", questionSymbol];
+    [URL appendFormat:@"%c", questionSymbol];
     
-    self->counter = 0;
+    counter = 0;
     return self;
 }
 
@@ -37,17 +37,17 @@
     
     ++counter;
     
-    if  (self->counter > 1) {
-        [self->URL appendFormat:@"%c%@=%@", '&', escapedKey, escapedValue];
+    if  (counter > 1) {
+        [URL appendFormat:@"%c%@=%@", '&', escapedKey, escapedValue];
     }
     else {
-        [self->URL appendFormat:@"%@=%@", escapedKey, escapedValue];
+        [URL appendFormat:@"%@=%@", escapedKey, escapedValue];
     }
     
 }
 
 -(NSMutableString *)constructedURLString{
-    return [self->URL mutableCopy];
+    return [URL mutableCopy];
 }
 
 @end
