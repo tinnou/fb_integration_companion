@@ -371,25 +371,53 @@
 - (void)fetchedData:(NSData *)responseData {
     //parse out the json data
     NSError* error;
+    NSMutableString* avatarPhotoUrl =  [[NSMutableString alloc] initWithString:@"http://i.nflcdn.com/static/site/img/community/profile/no-avatar.png"]; //Default url
     NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:responseData //1
+                          JSONObjectWithData:responseData
                           options:kNilOptions
                           error:&error];
     
     NSArray* response = [json objectForKey:@"Envelopes"];
     NSDictionary* payload = [[response objectAtIndex:0] objectForKey:@"Payload"];
     NSDictionary* user = [payload objectForKey:@"User"];
-    NSString* avatarPhotoUrl = [user objectForKey:@"AvatarPhotoUrl"]; //2
+    if (!user) {
+        NSLog(@"NO USER");
+        [self loadImage:avatarPhotoUrl];
+        return;
+    }
     
-    NSLog(@"response: %@", avatarPhotoUrl.class); //3
+    avatarPhotoUrl = [user objectForKey:@"AvatarPhotoUrl"];
+    
+    if (!avatarPhotoUrl) {
+        NSLog(@"NO avatarPhotoUrl");
+        [self loadImage:avatarPhotoUrl];
+        return;
+    }
+    
+    NSLog(@"response: %@", avatarPhotoUrl);
+    [self loadImage:avatarPhotoUrl];
+    
+    /*
+    NSError *regError = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\/images\/no\-user\-image\.gif$"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&regError];
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:avatarPhotoUrl
+                                                        options:0
+                                                          range:NSMakeRange(0, [avatarPhotoUrl length])];
+    NSLog(@"Number of matches %i", numberOfMatches);
+    */
+    
+}
+
+- (void)loadImage:(NSString *)stringUrl {
     
     //We got the Avatar url string - now let's push it to an image view
-    NSURL *url = [NSURL URLWithString: avatarPhotoUrl];
+    NSURL *url = [NSURL URLWithString: stringUrl];
     UIImage *image = [UIImage imageWithData: [NSData dataWithContentsOfURL:url]];
     _avatarImage.image =image;
     
 }
-
 
 // UIAlertView helper for post buttons
 - (void)showAlert:(NSString *)message
