@@ -269,39 +269,39 @@
     NSString *template = @"basic-html";
     NSString *confirm = @"true";
     
-    //OG object and action info - this should be dynamic!
-    NSString *game_id = @"2012091300";
-    NSString *year = @"2012";
-    NSString *game_week = @"2";
-    NSString *team_home = @"bears";
-    NSString *team_away = @"packers";
-    NSString *object = @"play";
-    NSString *action = @"predict";
-    NSString *image = @"http://static.nfl.com/static/content/public/image/mobile/TNF_200x200.png";
-    NSString *object_title = @"How many rounds was the very first NFL Draft?";
-    NSString *object_answer = @"8";
-    NSString *user_question_score = @"1350";
-    NSString *user_total_score = @"865000";
-    NSString *user_team = @"bears";
+    //OG object and action info - this should be dynamic! (R: Required, O: Optional, D: depends on the action)
+    NSString *game_id = @"2012091300"; //O
+    NSString *year = @"2012"; //O
+    NSString *game_week = @"2"; //O
+    NSString *team_home = @"bears"; //O
+    NSString *team_away = @"packers"; //O
+    NSString *object = @"poll_question"; //R
+    NSString *action = @"answer"; //R
+    NSString *image = @"http://static.nfl.com/static/content/public/image/mobile/TNF_200x200.png"; //O
+    NSString *object_title = @"How many rounds was the very first NFL Draft?"; //R
+    NSString *object_answer = @"8"; //D
+    NSString *user_question_score = @"1350"; //D
+    NSString *user_total_score = @"865000"; //D
+    NSString *user_team = @"bears"; //D
 
     
     //Construct a valid URL encoded string 
     HFURLBuilder *builder = [[HFURLBuilder alloc] initWithResourceURLString:baseUrl];
     [builder setQueryParameterWithName:@"template" toValue:template];
     [builder setQueryParameterWithName:@"confirm" toValue:confirm];
-    [builder setQueryParameterWithName:@"game_id" toValue:game_id];
-    [builder setQueryParameterWithName:@"year" toValue:year];
-    [builder setQueryParameterWithName:@"game_week" toValue:game_week];
-    [builder setQueryParameterWithName:@"team_home" toValue:team_home];
-    [builder setQueryParameterWithName:@"team_away" toValue:team_away];
+    //[builder setQueryParameterWithName:@"game_id" toValue:game_id];
+    //[builder setQueryParameterWithName:@"year" toValue:year];
+    //[builder setQueryParameterWithName:@"game_week" toValue:game_week];
+    //[builder setQueryParameterWithName:@"team_home" toValue:team_home];
+    //[builder setQueryParameterWithName:@"team_away" toValue:team_away];
     [builder setQueryParameterWithName:@"object" toValue:object];
     [builder setQueryParameterWithName:@"action" toValue:action];
-    [builder setQueryParameterWithName:@"image" toValue:image];
+    //[builder setQueryParameterWithName:@"image" toValue:image];
     [builder setQueryParameterWithName:@"object_title" toValue:object_title];
-    [builder setQueryParameterWithName:@"object_answer" toValue:object_answer];
-    [builder setQueryParameterWithName:@"user_question_score" toValue:user_question_score];
-    [builder setQueryParameterWithName:@"user_total_score" toValue:user_total_score];
-    [builder setQueryParameterWithName:@"user_team" toValue:user_team];
+    //[builder setQueryParameterWithName:@"object_answer" toValue:object_answer];
+    //[builder setQueryParameterWithName:@"user_question_score" toValue:user_question_score];
+    //[builder setQueryParameterWithName:@"user_total_score" toValue:user_total_score];
+    //[builder setQueryParameterWithName:@"user_team" toValue:user_team];
 
     
     NSURL *url = [NSURL URLWithString:[builder constructedURLString]];
