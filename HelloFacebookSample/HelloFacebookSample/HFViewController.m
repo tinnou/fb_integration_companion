@@ -469,7 +469,7 @@
 // UIAlertView helper for post buttons
 - (IBAction)openTwitterWidget:(UIButton *)sender {
     
-    NSString *fullURL = @"http://www.nfl.com/mobile/twitter-list.html?template=basic-html&confirm=true";
+    NSString *fullURL = @"http://www.nfl.com/mobile/twitter-list.html?template=basic-html&confirm=true&height=500";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     NSString* token =  [NSString stringWithFormat:@"FB._authResponse.accessToken = '%@'", [FBSession activeSession].accessToken];
