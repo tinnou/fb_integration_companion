@@ -21,11 +21,12 @@
     
     IBOutlet UIWebView *webView;
     IBOutlet UIWebView *webViewLogin;
-    
+    IBOutlet UIWebView *webViewSso;
 }
 
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) UIWebView *webViewLogin;
+@property (nonatomic, retain) UIWebView *webViewSso;
 
 
 @end

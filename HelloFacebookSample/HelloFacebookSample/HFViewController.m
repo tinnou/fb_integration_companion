@@ -35,6 +35,8 @@
 
 @property (strong, nonatomic) IBOutlet FBProfilePictureView *profilePic;
 @property (strong, nonatomic) IBOutlet UIButton *buttonPostOpenGraph;
+@property (strong, nonatomic) IBOutlet UIButton *buttonOpenSsoPage;
+@property (strong, nonatomic) IBOutlet UIButton *butonOpenTwitter;
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonOpenWebView;
 @property (strong, nonatomic) IBOutlet UIButton *buttonOpenWebViewLogin;
@@ -55,6 +57,8 @@
 - (IBAction)openWebViewClick:(UIButton *)sender;
 - (IBAction)openWebViewClickLogin:(UIButton *)sender;
 - (IBAction)postOpenGraphClick:(UIButton *)sender;
+//- (IBAction)openSsoPage:(UIButton *)sender;
+- (IBAction)openTwitterWidget:(UIButton *)sender;
 
 
 - (void)showAlert:(NSString *)message
@@ -66,6 +70,7 @@
 
 @implementation HFViewController
 
+@synthesize butonOpenTwitter = _butonOpenTwitter;
 @synthesize buttonOpenWebView = _buttonOpenWebView;
 @synthesize buttonOpenWebViewLogin = _buttonOpenWebViewLogin;
 @synthesize textFieldAvatar = _textFieldAvatar;
@@ -79,9 +84,11 @@
 @synthesize loggedInUser = _loggedInUser;
 @synthesize profilePic = _profilePic;
 @synthesize buttonPostOpenGraph = _buttonPostOpenGraph;
+//@synthesize buttonOpenSsoPage = _buttonOpenSsoPage;
 
 @synthesize webView;
 @synthesize webViewLogin;
+@synthesize webViewSso;
 
 - (void)viewDidLoad {    
     [super viewDidLoad];
@@ -136,6 +143,8 @@
     [self setButtonPostOpenGraph:nil];
     [self setTextFieldAvatar:nil];
     [self setAvatarImage:nil];
+    //[self setButtonOpenSsoPage:nil];
+    [self setButonOpenTwitter:nil];
     [super viewDidUnload];
 }
 
@@ -227,12 +236,7 @@
 // open web view button handler
 - (IBAction)openWebViewClick:(UIButton *)sender {
     
-    if (webView.hidden == false ) {
-        [webView reload];
-        return;
-    }
-    
-    NSString *fullURL = @"http://www.nfl.com/mobile/fb-comments.html?template=basic-html&confirm=true&gameId=2&width=400&theme=light&mobile=true";
+    NSString *fullURL = @"http://www.nfl.com/mobile/fb-comments.html?template=basic-html&confirm=true&gameId=2&width=400&theme=dark&mobile=true";
     NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     NSString* token =  [NSString stringWithFormat:@"FB._authResponse.accessToken = '%@'", [FBSession activeSession].accessToken];
@@ -245,74 +249,109 @@
 // open web view button handler for the FB SHARE (OPEN GRPAH JS SDK)
 - (IBAction)openWebViewClickLogin:(UIButton *)sender {
     
-    //Let's animate (shake) the whole view 
-    CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
-    anim.values = [ NSArray arrayWithObjects:
-                   [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ],
-                   [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ],
-                   nil ] ;
-    anim.autoreverses = YES ;
-    anim.repeatCount = 2.0f ;
-    anim.duration = 0.07f ;
-    
-    
-    if (webViewLogin.hidden == false ) {
-        [webViewLogin reload];
-        [self.view.layer addAnimation:anim forKey:nil ] ;
-        return;
+    if (FBSession.activeSession.isOpen) {
+        NSLog(@"User is logged in into Facebook");
+        //Let's animate (shake) the whole view
+        CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
+        anim.values = [ NSArray arrayWithObjects:
+                       [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ],
+                       [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ],
+                       nil ] ;
+        anim.autoreverses = YES ;
+        anim.repeatCount = 2.0f ;
+        anim.duration = 0.07f ;
+        
+        
+        if (webViewLogin.hidden == false ) {
+            [webViewLogin reload];
+            [self.view.layer addAnimation:anim forKey:nil ] ;
+            return;
+        }
+        
+        //Let's construct our Open Graph request
+        
+        //General pre-requisite
+        NSString *baseUrl = @"http://www.nfl.com/mobile/fb-share";
+        NSString *template = @"basic-html";
+        NSString *confirm = @"true";
+        
+        //OG object and action info - this should be dynamic! (R: Required, O: Optional, D: depends on the action)
+        NSString *game_id = @"2012091300"; //O
+        NSString *year = @"2012"; //O
+        NSString *game_week = @"2"; //O
+        NSString *team_home = @"bears"; //O
+        NSString *team_away = @"packers"; //O
+        NSString *object = @"poll_question"; //R
+        NSString *action = @"answer"; //R
+        NSString *image = @"http://static.nfl.com/static/content/public/image/mobile/TNF_200x200.png"; //O
+        NSString *object_title = @"How many rounds was the very first NFL Draft?"; //R
+        NSString *object_answer = @"8"; //D
+        NSString *user_question_score = @"1350"; //D
+        NSString *user_total_score = @"865000"; //D
+        NSString *user_team = @"bears"; //D
+        
+        
+        //Construct a valid URL encoded string
+        HFURLBuilder *builder = [[HFURLBuilder alloc] initWithResourceURLString:baseUrl];
+        [builder setQueryParameterWithName:@"template" toValue:template];
+        [builder setQueryParameterWithName:@"confirm" toValue:confirm];
+        //[builder setQueryParameterWithName:@"game_id" toValue:game_id];
+        //[builder setQueryParameterWithName:@"year" toValue:year];
+        //[builder setQueryParameterWithName:@"game_week" toValue:game_week];
+        //[builder setQueryParameterWithName:@"team_home" toValue:team_home];
+        //[builder setQueryParameterWithName:@"team_away" toValue:team_away];
+        [builder setQueryParameterWithName:@"object" toValue:object];
+        [builder setQueryParameterWithName:@"action" toValue:action];
+        //[builder setQueryParameterWithName:@"image" toValue:image];
+        [builder setQueryParameterWithName:@"object_title" toValue:object_title];
+        //[builder setQueryParameterWithName:@"object_answer" toValue:object_answer];
+        //[builder setQueryParameterWithName:@"user_question_score" toValue:user_question_score];
+        //[builder setQueryParameterWithName:@"user_total_score" toValue:user_total_score];
+        //[builder setQueryParameterWithName:@"user_team" toValue:user_team];
+        
+        
+        NSURL *url = [NSURL URLWithString:[builder constructedURLString]];
+        
+        NSLog(@"URL to request: %@", url);
+        
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+        [webViewLogin loadRequest:requestObj];
+        
+        webViewLogin.hidden = NO;
+        [ self.view.layer addAnimation:anim forKey:nil ] ;
     }
+    else {
+        NSLog(@"User is not logged in into Facebook");
     
-    //Let's construct our Open Graph request
-    
-    //General pre-requisite
-    NSString *baseUrl = @"http://www.nfl.com/mobile/fb-share";
-    NSString *template = @"basic-html";
-    NSString *confirm = @"true";
-    
-    //OG object and action info - this should be dynamic! (R: Required, O: Optional, D: depends on the action)
-    NSString *game_id = @"2012091300"; //O
-    NSString *year = @"2012"; //O
-    NSString *game_week = @"2"; //O
-    NSString *team_home = @"bears"; //O
-    NSString *team_away = @"packers"; //O
-    NSString *object = @"poll_question"; //R
-    NSString *action = @"answer"; //R
-    NSString *image = @"http://static.nfl.com/static/content/public/image/mobile/TNF_200x200.png"; //O
-    NSString *object_title = @"How many rounds was the very first NFL Draft?"; //R
-    NSString *object_answer = @"8"; //D
-    NSString *user_question_score = @"1350"; //D
-    NSString *user_total_score = @"865000"; //D
-    NSString *user_team = @"bears"; //D
-
-    
-    //Construct a valid URL encoded string 
-    HFURLBuilder *builder = [[HFURLBuilder alloc] initWithResourceURLString:baseUrl];
-    [builder setQueryParameterWithName:@"template" toValue:template];
-    [builder setQueryParameterWithName:@"confirm" toValue:confirm];
-    //[builder setQueryParameterWithName:@"game_id" toValue:game_id];
-    //[builder setQueryParameterWithName:@"year" toValue:year];
-    //[builder setQueryParameterWithName:@"game_week" toValue:game_week];
-    //[builder setQueryParameterWithName:@"team_home" toValue:team_home];
-    //[builder setQueryParameterWithName:@"team_away" toValue:team_away];
-    [builder setQueryParameterWithName:@"object" toValue:object];
-    [builder setQueryParameterWithName:@"action" toValue:action];
-    //[builder setQueryParameterWithName:@"image" toValue:image];
-    [builder setQueryParameterWithName:@"object_title" toValue:object_title];
-    //[builder setQueryParameterWithName:@"object_answer" toValue:object_answer];
-    //[builder setQueryParameterWithName:@"user_question_score" toValue:user_question_score];
-    //[builder setQueryParameterWithName:@"user_total_score" toValue:user_total_score];
-    //[builder setQueryParameterWithName:@"user_team" toValue:user_team];
-
-    
-    NSURL *url = [NSURL URLWithString:[builder constructedURLString]];
-   
-    NSLog(@"URL to request: %@", url);
-    
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-    [webViewLogin loadRequest:requestObj];
- 
-    webViewLogin.hidden = NO;
-    [ self.view.layer addAnimation:anim forKey:nil ] ;
+        //Init the permissions - could be an instance variable, or constant
+        NSArray *permissions = [[NSArray alloc] initWithObjects:
+                                @"publish_actions",
+                                @"email",
+                                @"user_about_me",
+                                @"user_activities",
+                                @"user_birthday",
+                                @"user_education_history",
+                                @"user_hometown",
+                                @"user_interests",
+                                @"user_likes",
+                                @"user_location",
+                                //@"status_update", //this is an extended permission, uncomment to enable "post status update" feature
+                                nil];
+        
+        //If the session isn't open, let's open it now and present the login UX to the user
+        [FBSession openActiveSessionWithPermissions:permissions
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session,
+                                                      FBSessionState status,
+                                                      NSError *error) {
+                                      
+              if (FBSession.activeSession.isOpen) {
+                  NSLog(@"User is logged in into Facebook");
+                  [self openWebViewClickLogin:sender];//call the same function again
+              }
+          }];
+        
+    }
     
 }
 
@@ -339,6 +378,14 @@
      }];
 
 }
+
+- (IBAction)openSsoPage:(UIButton *)sender {
+    NSURL *nflSso = [NSURL URLWithString:@"https://id2.s.nfl.com/fans/mobile/login"];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:nflSso];
+    [webViewSso loadRequest:requestObj];
+    webViewSso.hidden = NO;
+}
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
@@ -420,6 +467,18 @@
 }
 
 // UIAlertView helper for post buttons
+- (IBAction)openTwitterWidget:(UIButton *)sender {
+    
+    NSString *fullURL = @"http://www.nfl.com/mobile/twitter-list.html?template=basic-html&confirm=true";
+    NSURL *url = [NSURL URLWithString:fullURL];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    NSString* token =  [NSString stringWithFormat:@"FB._authResponse.accessToken = '%@'", [FBSession activeSession].accessToken];
+    [webView stringByEvaluatingJavaScriptFromString: token];
+    [webView loadRequest:requestObj];
+    
+    webView.hidden = NO;
+}
+
 - (void)showAlert:(NSString *)message
            result:(id)result
             error:(NSError *)error {
@@ -525,13 +584,39 @@
 }
 
 //This method intercepts all the HTTP requests from all the webviews on the view
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+- (BOOL)webView:(UIWebView *)webViewParam shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
+    if ([webViewParam isEqual:webView]) {        
+        //All the links to either tweet, retweet or to another user twitter account are mobile friendly so we let them go thru
+        if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+            if ([[request.URL relativeString] containsString:@"twitter.com" options:NSCaseInsensitiveSearch]) {
+                NSLog(@"Opening in webview");
+                return YES;
+            }
+            else { //All the other links will be open in Safari outside of the app
+                [[UIApplication sharedApplication] openURL:[request URL]];
+                NSLog(@"Opening in Safari: %@ , %@", [request URL] , [request.URL relativeString]);
+                return NO;
+            }
+        }
+        else {
+            return YES;
+        }
+        return YES;
+    }
+    
+    if ([webViewParam isEqual:webViewSso]) {
+        return YES;
+    }
     //let's lookup if the user is trying to login in Facebook mobile
     //(URL depends on Facebook - is there a safer way to do it?)
     if ([[request.URL relativeString] containsString:@"facebook.com/login" options:NSCaseInsensitiveSearch]) {
         NSLog(@"User is trying to log in.");
-       
+        
+        if (!FBSession.activeSession.isOpen) {
+            return NO;
+        }
+        
         if (FBSession.activeSession.state != FBSessionStateCreated) {
             // Create a new, logged out session.
             FBSession.activeSession = [[FBSession alloc] init];
@@ -563,7 +648,7 @@
                 NSLog(@"User is logged in into Facebook");
                 // and here we make sure to update our UX according to the new session state
                 [self.webView reload];
-                //TODO - notify Gigya of the Fb login
+                
             }
         }];
         
@@ -575,5 +660,7 @@
     //all the other cases we let it go
     return YES;
 }
+
+
 
 @end

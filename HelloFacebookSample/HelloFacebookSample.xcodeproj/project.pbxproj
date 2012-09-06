@@ -43,6 +43,7 @@
 		3A7F26F515D9C1D600B9B58F /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3A7F286115DC7D6400B9B58F /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		3AA5AB0815E2F07A00FA55B7 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		3AA9E47915F1AEB20012476F /* HelloFacebookSample copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "HelloFacebookSample copy-Info.plist"; path = "/Users/antoine.boyer/Documents/Projects/fb_integration_companion/HelloFacebookSample/HelloFacebookSample copy-Info.plist"; sourceTree = "<absolute>"; };
 		5F6AF1891532A37B00DDBD75 /* HelloFacebookSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloFacebookSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F6AF18D1532A37B00DDBD75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F6AF18F1532A37B00DDBD75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -90,6 +91,7 @@
 				5F6AF1931532A37B00DDBD75 /* HelloFacebookSample */,
 				5F6AF18C1532A37B00DDBD75 /* Frameworks */,
 				5F6AF18A1532A37B00DDBD75 /* Products */,
+				3AA9E47915F1AEB20012476F /* HelloFacebookSample copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -325,7 +327,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloFacebookSample/HelloFacebookSample-Prefix.pch";
 				INFOPLIST_FILE = "HelloFacebookSample/HelloFacebookSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LD_RUNPATH_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks;
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = HelloFacebookSample;
@@ -348,7 +350,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloFacebookSample/HelloFacebookSample-Prefix.pch";
 				INFOPLIST_FILE = "HelloFacebookSample/HelloFacebookSample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LD_RUNPATH_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks;
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = HelloFacebookSample;
